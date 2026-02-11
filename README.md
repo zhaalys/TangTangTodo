@@ -1,5 +1,5 @@
 <p align="center">
-  <img src="public/tangtanglogo1.png" width="120" alt="TangTang Logo">
+  <img src="public/tangtanglogo1.png" width="400" alt="TangTang Logo">
 </p>
 
 # TangTangTodo - Premium Productivity Portal
