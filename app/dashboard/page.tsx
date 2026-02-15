@@ -18,8 +18,23 @@ const DashboardPage = () => {
   const { user } = useAuth();
   const [tasks, setTasks] = useState<any[]>([]);
   const [loading, setLoading] = useState(true);
+  const [dailyQuote, setDailyQuote] = useState("");
+
+  const quotes = [
+    "Fokus pada proses, bukan hasil akhir. Setiap langkah kecil membawamu lebih dekat.",
+    "Jangan biarkan kemarin merenggut terlalu banyak dari hari ini.",
+    "Waktu paling tepat untuk mulai adalah sekarang. Tangtang hari ini dengan maksimal!",
+    "Disiplin adalah jembatan antara cita-cita dan pencapaian nyata.",
+    "Produktivitas bukan soal sibuk, tapi soal kemajuan yang nyata.",
+    "Satu-satunya cara melakukan pekerjaan besar adalah mencintai apa yang kamu kerjakan.",
+    "Istirahatlah jika lelah, jangan menyerah. Besok adalah peluang baru.",
+  ];
 
   useEffect(() => {
+    // Pick quote based on date
+    const day = new Date().getUTCDay();
+    setDailyQuote(quotes[day % quotes.length]);
+
     if (!user) return;
 
     const q = query(collection(db, "tasks"), where("userId", "==", user.uid));
@@ -178,8 +193,7 @@ const DashboardPage = () => {
                   format_quote
                 </span>
                 <p className="relative z-10 text-white font-black italic leading-relaxed text-xl lg:text-2xl">
-                  "Fokus pada proses, bukan hasil akhir. Setiap langkah kecil
-                  membawamu lebih dekat."
+                  "{dailyQuote}"
                 </p>
                 <div className="mt-8 flex items-center gap-3 relative z-10">
                   <div className="w-12 h-12 rounded-full flex items-center justify-center bg-white/20 backdrop-blur-md">
@@ -199,7 +213,7 @@ const DashboardPage = () => {
               </div>
             </section>
 
-            {/* Calendar Placeholder or Extra Widget */}
+            {/* Agenda Hari Ini */}
             <section className="hidden lg:block bg-white dark:bg-surface-dark border border-slate-100 dark:border-white/5 rounded-[3rem] p-8 shadow-sm">
               <h4 className="font-black text-lg mb-6 flex items-center gap-2">
                 <span className="material-icons-round text-primary">
@@ -208,24 +222,33 @@ const DashboardPage = () => {
                 Agenda Hari Ini
               </h4>
               <div className="space-y-6">
-                <div className="flex gap-4 items-start">
-                  <div className="w-1 h-12 bg-primary/20 rounded-full"></div>
-                  <div>
-                    <p className="font-black text-sm">Meeting Rutin</p>
-                    <p className="text-xs text-slate-400 font-bold mt-1">
-                      09:00 - 10:00
+                {tasks.filter((t) => t.isToday && !t.completed).length > 0 ? (
+                  tasks
+                    .filter((t) => t.isToday && !t.completed)
+                    .slice(0, 3)
+                    .map((task, i) => (
+                      <div key={i} className="flex gap-4 items-start group">
+                        <div className="w-1 h-12 bg-primary/20 group-hover:bg-primary rounded-full transition-colors"></div>
+                        <div>
+                          <p className="font-black text-sm group-hover:text-primary transition-colors">
+                            {task.title}
+                          </p>
+                          <p className="text-xs text-slate-400 font-bold mt-1">
+                            {task.time} - {task.category}
+                          </p>
+                        </div>
+                      </div>
+                    ))
+                ) : (
+                  <div className="py-6 text-center opacity-30">
+                    <span className="material-icons-round text-3xl mb-2">
+                      event_busy
+                    </span>
+                    <p className="text-[10px] uppercase font-black tracking-widest">
+                      Agenda Kosong
                     </p>
                   </div>
-                </div>
-                <div className="flex gap-4 items-start opacity-40">
-                  <div className="w-1 h-12 bg-slate-300 rounded-full"></div>
-                  <div>
-                    <p className="font-black text-sm">Review Dokumentasi</p>
-                    <p className="text-xs text-slate-400 font-bold mt-1">
-                      11:00 - 12:00
-                    </p>
-                  </div>
-                </div>
+                )}
               </div>
             </section>
           </div>
