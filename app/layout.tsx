@@ -14,9 +14,13 @@ const plusJakartaSans = Plus_Jakarta_Sans({
 });
 
 export const metadata: Metadata = {
+  metadataBase: new URL("https://tangtangtodo.netlify.app"),
   title: "Tangtang - Productivity for Next Generation",
   description:
     "Master your day with Tangtang. Simple, fun, and powerful productivity.",
+  alternates: {
+    canonical: "/",
+  },
   icons: {
     icon: "/tangtanglogo1.png",
     shortcut: "/tangtanglogo1.png",
