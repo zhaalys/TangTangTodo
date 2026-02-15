@@ -28,6 +28,27 @@ export const translations: Translations = {
     ko: "프로필",
     ar: "الملف الشخصي",
   },
+  discussion: {
+    id: "Diskusi",
+    en: "Discussion",
+    ja: "ディスカッション",
+    ko: "토론",
+    ar: "نقاش",
+  },
+  add_task: {
+    id: "Tugas Baru",
+    en: "New Task",
+    ja: "新しいタスク",
+    ko: "새 작업",
+    ar: "مهمة جديدة",
+  },
+  add: {
+    id: "Tambah",
+    en: "Add",
+    ja: "追加",
+    ko: "추가",
+    ar: "إضافة",
+  },
 
   // Community
   community_title: {

@@ -22,8 +22,8 @@ const Navbar = () => {
     { href: "/dashboard", icon: "home", label: t("home") },
     { href: "/focus", icon: "timer", label: t("focus") },
     { href: "/tasks", icon: "task_alt", label: t("tasks") },
-    { href: "/add", icon: "add", label: "Add", isCenter: true },
-    { href: "/diskusi", icon: "forum", label: "Diskusi" },
+    { href: "/add", icon: "add", label: t("add"), isCenter: true },
+    { href: "/diskusi", icon: "forum", label: t("discussion") },
     { href: "/profile", icon: "person", label: t("profile") },
   ];
 
@@ -109,7 +109,7 @@ const Navbar = () => {
             className="w-full py-4 bg-primary text-white rounded-2xl flex items-center justify-center gap-2 font-black shadow-xl shadow-primary/20 primary-glow hover:scale-[1.02] transition-all active:scale-95"
           >
             <span className="material-icons-round">add</span>
-            <span>Tugas Baru</span>
+            <span>{t("add_task")}</span>
           </Link>
         </div>
       </nav>
