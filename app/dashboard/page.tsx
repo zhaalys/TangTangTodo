@@ -138,6 +138,36 @@ const DashboardPage = () => {
               </div>
             </section>
 
+            {/* Mobile Focus Mode Shortcut */}
+            <section className="lg:hidden">
+              <Link
+                href="/focus"
+                className="block relative overflow-hidden bg-gradient-to-br from-[#1e293b] to-[#0f172a] p-6 rounded-[2.5rem] border border-white/5 shadow-2xl group active:scale-95 transition-all"
+              >
+                <div className="absolute top-0 right-0 w-32 h-32 bg-primary/10 rounded-full blur-3xl -translate-y-1/2 translate-x-1/2 group-hover:bg-primary/20 transition-colors"></div>
+                <div className="flex items-center gap-4 relative z-10">
+                  <div className="w-14 h-14 rounded-2xl bg-white/5 flex items-center justify-center border border-white/10 group-hover:border-primary/50 transition-colors">
+                    <span className="material-icons-round text-primary text-3xl animate-pulse">
+                      timer
+                    </span>
+                  </div>
+                  <div>
+                    <h3 className="text-white font-black text-lg leading-tight uppercase tracking-tight">
+                      {t("focus")} Mode
+                    </h3>
+                    <p className="text-slate-400 text-[10px] font-bold uppercase tracking-widest mt-1">
+                      {t("ready_focus", { name: "" }).replace(", ?", "?")}
+                    </p>
+                  </div>
+                  <div className="ml-auto w-10 h-10 rounded-full bg-white/5 flex items-center justify-center">
+                    <span className="material-icons-round text-white/40 group-hover:text-primary transition-colors">
+                      arrow_forward
+                    </span>
+                  </div>
+                </div>
+              </Link>
+            </section>
+
             {/* Upcoming Tasks */}
             <section>
               <div className="flex justify-between items-center mb-6">
