@@ -4,7 +4,9 @@ import React, { useState, useEffect } from "react";
 import Link from "next/link";
 import Navbar from "../components/Navbar";
 import LanguagePicker from "../components/LanguagePicker";
+import ThemePicker from "../components/ThemePicker";
 import { useAuth } from "../../context/AuthContext";
+import { useTheme } from "../../context/ThemeContext";
 import { useLanguage } from "../../context/LanguageContext";
 import {
   collection,
@@ -18,6 +20,7 @@ import { db } from "../../lib/firebase";
 
 const DashboardPage = () => {
   const { user } = useAuth();
+  const { availableThemes } = useTheme();
   const { t } = useLanguage();
   const [tasks, setTasks] = useState<any[]>([]);
   const [loading, setLoading] = useState(true);
@@ -219,6 +222,19 @@ const DashboardPage = () => {
                   </div>
                 </div>
               </div>
+            </section>
+
+            {/* Theme Selection */}
+            <section className="bg-white/5 backdrop-blur-xl border border-white/10 rounded-[2.5rem] p-6 hidden lg:block">
+              <div className="flex justify-between items-center mb-4 px-2">
+                <h4 className="font-black text-sm uppercase tracking-widest opacity-60">
+                  {t("app_theme")}
+                </h4>
+                <span className="text-[10px] font-black text-primary">
+                  {availableThemes.length} Mode
+                </span>
+              </div>
+              <ThemePicker />
             </section>
 
             {/* Agenda Hari Ini */}
