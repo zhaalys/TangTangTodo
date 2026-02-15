@@ -3,6 +3,8 @@
 import React, { useState, useEffect, useMemo } from "react";
 import Link from "next/link";
 import Navbar from "../components/Navbar";
+import { useLanguage } from "../../context/LanguageContext";
+import { useAuth } from "../../context/AuthContext";
 
 interface JurnalEntry {
   date: string;
@@ -12,6 +14,8 @@ interface JurnalEntry {
 }
 
 const JurnalPage = () => {
+  const { t, language } = useLanguage();
+  const { user } = useAuth();
   const [selectedDate, setSelectedDate] = useState("");
   const [selectedMood, setSelectedMood] = useState("senang");
   const [entryText, setEntryText] = useState("");
@@ -23,22 +27,28 @@ const JurnalPage = () => {
   const dates = useMemo(() => {
     const today = new Date();
     const result = [];
+    const locale =
+      language === "id"
+        ? "id-ID"
+        : language === "ja"
+          ? "ja-JP"
+          : language === "ko"
+            ? "ko-KR"
+            : language === "ar"
+              ? "ar-SA"
+              : "en-US";
     for (let i = -3; i <= 3; i++) {
       const date = new Date();
       date.setDate(today.getDate() + i);
       result.push({
-        day: new Intl.DateTimeFormat("id-ID", { weekday: "short" }).format(
-          date,
-        ),
+        day: new Intl.DateTimeFormat(locale, { weekday: "short" }).format(date),
         date: date.getDate().toString(),
         fullDate: date.toISOString().split("T")[0],
-        month: new Intl.DateTimeFormat("id-ID", { month: "short" }).format(
-          date,
-        ),
+        month: new Intl.DateTimeFormat(locale, { month: "short" }).format(date),
       });
     }
     return result;
-  }, []);
+  }, [language]);
 
   // Initialize selected date to today
   useEffect(() => {
@@ -74,7 +84,7 @@ const JurnalPage = () => {
     };
     setEntries(newEntries);
     localStorage.setItem("tangtang_jurnal", JSON.stringify(newEntries));
-    alert("Cerita hari ini berhasil disimpan!");
+    alert(t("jurnal_saved_msg") || "Berhasil disimpan!");
   };
 
   const handleCamera = () => {
@@ -86,25 +96,25 @@ const JurnalPage = () => {
   const moods = [
     {
       id: "senang",
-      label: "Senang",
+      label: t("mood_happy"),
       icon: "sentiment_satisfied_alt",
       color: "text-amber-500",
     },
     {
       id: "semangat",
-      label: "Semangat",
+      label: t("mood_excited"),
       icon: "rocket_launch",
       color: "text-primary",
     },
     {
       id: "ngantuk",
-      label: "Ngantuk",
+      label: t("mood_sleepy"),
       icon: "bedtime",
       color: "text-indigo-400",
     },
     {
       id: "sedih",
-      label: "Sedih",
+      label: t("mood_sad"),
       icon: "sentiment_dissatisfied",
       color: "text-blue-400",
     },
@@ -122,10 +132,10 @@ const JurnalPage = () => {
         <header className="pt-12 flex justify-between items-center z-10 lg:pt-16">
           <div className="flex flex-col">
             <h1 className="text-2xl lg:text-4xl font-extrabold tracking-tight">
-              Jurnal Tangtang
+              {t("jurnal_title")}
             </h1>
             <p className="text-sm lg:text-base text-primary font-semibold flex items-center gap-1 mt-1">
-              Petualangan Hari Ini{" "}
+              {t("jurnal_subtitle")}{" "}
               <span className="material-icons-round text-[16px]">
                 celebration
               </span>
@@ -151,7 +161,15 @@ const JurnalPage = () => {
             {/* Date Scroller */}
             <section>
               <h3 className="text-xs font-black text-slate-400 uppercase tracking-widest mb-4 ml-2">
-                Kalender
+                {language === "id"
+                  ? "Kalender"
+                  : language === "en"
+                    ? "Calendar"
+                    : language === "ja"
+                      ? "カレンダー"
+                      : language === "ko"
+                        ? "캘린더"
+                        : "التقويم"}
               </h3>
               <div className="flex overflow-x-auto scroll-hide space-x-4 py-2">
                 {dates.map((d, idx) => (
@@ -183,7 +201,15 @@ const JurnalPage = () => {
             {/* Mood Picker */}
             <section>
               <h3 className="text-xs font-black text-slate-400 uppercase tracking-widest mb-4 ml-2">
-                Suasana Hati
+                {language === "id"
+                  ? "Suasana Hati"
+                  : language === "en"
+                    ? "Mood"
+                    : language === "ja"
+                      ? "気分"
+                      : language === "ko"
+                        ? "기분"
+                        : "المزاج"}
               </h3>
               <div className="flex justify-around items-center bg-white/5 dark:bg-surface-dark/50 rounded-[2.5rem] p-4 border border-white/5 backdrop-blur-md">
                 {moods.map((mood) => (
@@ -214,7 +240,15 @@ const JurnalPage = () => {
             {/* Photo Moment Section */}
             <section className="hidden lg:block">
               <h3 className="text-xs font-black text-slate-400 uppercase tracking-widest mb-4 ml-2">
-                Momen Terakhir
+                {language === "id"
+                  ? "Momen Terakhir"
+                  : language === "en"
+                    ? "Last Moment"
+                    : language === "ja"
+                      ? "最後の瞬間"
+                      : language === "ko"
+                        ? "마지막 순간"
+                        : "اللحظة الأخيرة"}
               </h3>
               <div className="relative rounded-[3rem] overflow-hidden h-56 shadow-2xl group cursor-pointer text-white border border-white/5">
                 <div className="absolute inset-0 bg-slate-800 flex items-center justify-center">
@@ -225,10 +259,12 @@ const JurnalPage = () => {
                 <div className="absolute inset-0 bg-gradient-to-t from-background-dark/95 via-background-dark/20 to-transparent"></div>
                 <div className="absolute bottom-8 left-8 right-8">
                   <p className="text-[10px] font-black text-primary uppercase tracking-[0.2em] mb-2">
-                    Aktivitas Malam
+                    {language === "id" ? "Aktivitas Malam" : "Night Activity"}
                   </p>
                   <h4 className="text-2xl font-black leading-tight">
-                    Menangkap Kunang-Kunang
+                    {language === "id"
+                      ? "Menangkap Kunang-Kunang"
+                      : "Catching Fireflies"}
                   </h4>
                 </div>
               </div>
@@ -243,10 +279,10 @@ const JurnalPage = () => {
               <div className="relative z-10 flex justify-between items-start mb-8">
                 <div>
                   <h3 className="font-black text-2xl lg:text-3xl tracking-tight">
-                    Cerita Hari Ini
+                    {t("jurnal_entry_title")}
                   </h3>
                   <p className="text-slate-500 font-bold mt-1 uppercase text-xs tracking-widest">
-                    Bagikan momen serumu
+                    {t("jurnal_subtitle")}
                   </p>
                 </div>
                 <div
@@ -261,7 +297,7 @@ const JurnalPage = () => {
               <textarea
                 value={entryText}
                 onChange={(e) => setEntryText(e.target.value)}
-                placeholder="Tulis petualanganmu di sini..."
+                placeholder={t("jurnal_entry_placeholder")}
                 className="flex-1 w-full bg-transparent border-none focus:ring-0 text-slate-700 dark:text-slate-200 leading-relaxed text-lg lg:text-xl placeholder:italic placeholder:text-slate-500/30 resize-none font-bold outline-none"
               />
 
@@ -278,7 +314,9 @@ const JurnalPage = () => {
                     ))}
                   </div>
                   <p className="text-red-500 font-black uppercase tracking-widest">
-                    Perekaman Suara Aktif...
+                    {language === "id"
+                      ? "Perekaman Suara Aktif..."
+                      : "Voice Recording Active..."}
                   </p>
                 </div>
               )}
@@ -295,7 +333,13 @@ const JurnalPage = () => {
                   <span className="material-icons-round text-2xl">
                     {isRecording ? "stop" : "mic"}
                   </span>
-                  <span>{isRecording ? "Selesai" : "Simpan Cerita"}</span>
+                  <span>
+                    {isRecording
+                      ? language === "id"
+                        ? "Selesai"
+                        : "Finish"
+                      : t("jurnal_save")}
+                  </span>
                 </button>
                 <button
                   onClick={handleCamera}

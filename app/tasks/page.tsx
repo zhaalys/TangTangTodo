@@ -5,6 +5,7 @@ import Link from "next/link";
 import { useSearchParams, useRouter } from "next/navigation";
 import Navbar from "../components/Navbar";
 import { useAuth } from "../../context/AuthContext";
+import { useLanguage } from "../../context/LanguageContext";
 import {
   collection,
   addDoc,
@@ -33,7 +34,8 @@ const TasksContent = () => {
   const searchParams = useSearchParams();
   const router = useRouter();
   const { user, loading: authLoading } = useAuth();
-  const [activeFilter, setActiveFilter] = useState("Semua");
+  const { t } = useLanguage();
+  const [activeFilter, setActiveFilter] = useState(t("task_filter_all"));
   const [tasks, setTasks] = useState<Task[]>([]);
   const [loading, setLoading] = useState(true);
   const [selectedTask, setSelectedTask] = useState<Task | null>(null);
@@ -96,20 +98,25 @@ const TasksContent = () => {
     }
   }, [searchParams]);
 
-  const filters = ["Semua", "Hari Ini", "Penting", "Selesai"];
+  const filters = [
+    t("task_filter_all"),
+    t("task_filter_today"),
+    t("task_filter_important"),
+    t("task_filter_finished"),
+  ];
 
   const filteredTasks = useMemo(() => {
     switch (activeFilter) {
-      case "Hari Ini":
+      case t("task_filter_today"):
         return tasks.filter((t) => t.isToday);
-      case "Penting":
+      case t("task_filter_important"):
         return tasks.filter((t) => t.isPenting);
-      case "Selesai":
+      case t("task_filter_finished"):
         return tasks.filter((t) => t.completed);
       default:
         return tasks;
     }
-  }, [activeFilter, tasks]);
+  }, [activeFilter, tasks, t]);
 
   const toggleTask = async (e: React.MouseEvent, id: string) => {
     e.stopPropagation();
@@ -224,7 +231,9 @@ const TasksContent = () => {
             <span className="material-icons-round">chevron_left</span>
           </Link>
           <h1 className="text-2xl lg:text-4xl font-extrabold tracking-tight">
-            Semua Tugas
+            {activeFilter === t("task_filter_all")
+              ? t("all_tasks")
+              : activeFilter}
           </h1>
         </header>
 
@@ -296,7 +305,7 @@ const TasksContent = () => {
             <div className="col-span-full py-20 flex flex-col items-center justify-center opacity-30 text-center space-y-4">
               <span className="material-icons-round text-7xl">task_alt</span>
               <p className="font-black text-sm uppercase tracking-widest">
-                Tidak ada tugas
+                {t("task_empty")}
               </p>
             </div>
           )}
@@ -333,14 +342,18 @@ const TasksContent = () => {
               <div className="space-y-6">
                 <div className="flex items-center gap-4 text-slate-500 font-bold text-lg">
                   <span className="material-icons-round">schedule</span>
-                  <span>Jam {selectedTask.time}</span>
+                  <span>
+                    {t("task_time")} {selectedTask.time}
+                  </span>
                 </div>
                 <div className="flex items-center gap-4 text-slate-500 font-bold text-lg">
                   <span className="material-icons-round text-amber-500">
                     stars
                   </span>
                   <span>
-                    {selectedTask.isPenting ? "Tugas Penting" : "Tugas Reguler"}
+                    {selectedTask.isPenting
+                      ? t("task_important")
+                      : "Tugas Reguler"}
                   </span>
                 </div>
               </div>
@@ -349,13 +362,13 @@ const TasksContent = () => {
                   onClick={handleEditOpen}
                   className="py-5 rounded-2xl bg-slate-100 dark:bg-white/5 font-black uppercase text-xs tracking-widest hover:bg-slate-200 text-primary"
                 >
-                  Edit
+                  {t("task_edit")}
                 </button>
                 <button
                   onClick={() => deleteTask(selectedTask.id)}
-                  className="py-5 rounded-2xl bg-red-500 text-white font-black uppercase text-xs tracking-widest hover:bg-red-600"
+                  className="py-5 rounded-2xl bg-red-500 text-white font-black uppercase text-xs tracking-widest hover:red-600"
                 >
-                  Hapus
+                  {t("task_delete")}
                 </button>
               </div>
               <button
@@ -388,23 +401,23 @@ const TasksContent = () => {
         {isAddOpen && (
           <div className="fixed inset-0 z-[110] flex items-center justify-center p-4">
             <div className="w-full max-w-[450px] bg-white dark:bg-surface-dark rounded-[3rem] p-10 shadow-2xl border border-white/5 animate-in zoom-in-95 duration-300">
-              <h2 className="text-3xl font-black mb-10">Tugas Baru</h2>
+              <h2 className="text-3xl font-black mb-10">{t("task_save")}</h2>
               <div className="space-y-8">
                 <div>
                   <label className="text-[11px] font-black uppercase tracking-widest text-slate-400 ml-4 mb-3 block">
-                    Judul Tugas
+                    {t("task_title")}
                   </label>
                   <input
                     value={newTitle}
                     onChange={(e) => setNewTitle(e.target.value)}
-                    placeholder="Contoh: Belajar Coding"
+                    placeholder="..."
                     className="w-full bg-slate-100 dark:bg-white/5 rounded-2xl px-6 py-5 font-bold focus:ring-2 ring-primary outline-none"
                   />
                 </div>
                 <div className="grid grid-cols-2 gap-4">
                   <div>
                     <label className="text-[11px] font-black uppercase tracking-widest text-slate-400 ml-4 mb-3 block">
-                      Jam
+                      {t("task_time")}
                     </label>
                     <input
                       type="time"
@@ -415,7 +428,7 @@ const TasksContent = () => {
                   </div>
                   <div>
                     <label className="text-[11px] font-black uppercase tracking-widest text-slate-400 ml-4 mb-3 block">
-                      Kategori
+                      {t("task_category")}
                     </label>
                     <select
                       value={newCategory}
@@ -437,7 +450,7 @@ const TasksContent = () => {
                   <span className="material-icons-round">
                     {newIsPenting ? "stars" : "star_outline"}
                   </span>
-                  <span className="text-sm">Tandai sebagai Penting</span>
+                  <span className="text-sm">{t("task_important")}</span>
                 </button>
               </div>
               <div className="mt-12">
@@ -445,13 +458,13 @@ const TasksContent = () => {
                   onClick={addTask}
                   className="w-full py-6 rounded-3xl bg-primary text-white font-black text-sm uppercase tracking-widest shadow-xl shadow-primary/30 hover:bg-primary/90"
                 >
-                  Simpan Tugas
+                  {t("task_save")}
                 </button>
                 <button
                   onClick={() => setIsAddOpen(false)}
                   className="w-full mt-6 text-slate-400 font-black text-xs uppercase tracking-widest hover:text-slate-600 text-center"
                 >
-                  Batal
+                  {t("task_cancel")}
                 </button>
               </div>
             </div>
@@ -462,11 +475,11 @@ const TasksContent = () => {
         {isEditOpen && selectedTask && (
           <div className="fixed inset-0 z-[110] flex items-center justify-center p-4">
             <div className="w-full max-w-[450px] bg-white dark:bg-surface-dark rounded-[3rem] p-10 shadow-2xl border border-white/5 animate-in zoom-in-95 duration-300">
-              <h2 className="text-3xl font-black mb-10">Edit Tugas</h2>
+              <h2 className="text-3xl font-black mb-10">{t("task_edit")}</h2>
               <div className="space-y-8">
                 <div>
                   <label className="text-[11px] font-black uppercase tracking-widest text-slate-400 ml-4 mb-3 block">
-                    Judul Tugas
+                    {t("task_title")}
                   </label>
                   <input
                     value={newTitle}
@@ -477,7 +490,7 @@ const TasksContent = () => {
                 <div className="grid grid-cols-2 gap-4">
                   <div>
                     <label className="text-[11px] font-black uppercase tracking-widest text-slate-400 ml-4 mb-3 block">
-                      Jam
+                      {t("task_time")}
                     </label>
                     <input
                       type="time"
@@ -488,7 +501,7 @@ const TasksContent = () => {
                   </div>
                   <div>
                     <label className="text-[11px] font-black uppercase tracking-widest text-slate-400 ml-4 mb-3 block">
-                      Kategori
+                      {t("task_category")}
                     </label>
                     <select
                       value={newCategory}
@@ -510,7 +523,7 @@ const TasksContent = () => {
                   <span className="material-icons-round">
                     {newIsPenting ? "stars" : "star_outline"}
                   </span>
-                  <span className="text-sm">Tandai sebagai Penting</span>
+                  <span className="text-sm">{t("task_important")}</span>
                 </button>
               </div>
               <div className="mt-12">
@@ -518,13 +531,13 @@ const TasksContent = () => {
                   onClick={updateTask}
                   className="w-full py-6 rounded-3xl bg-emerald-500 text-white font-black text-sm uppercase tracking-widest shadow-xl shadow-emerald-500/30 hover:bg-emerald-600"
                 >
-                  Perbarui Tugas
+                  {t("task_edit")}
                 </button>
                 <button
                   onClick={() => setIsEditOpen(false)}
                   className="w-full mt-6 text-slate-400 font-black text-xs uppercase tracking-widest hover:text-slate-600 text-center"
                 >
-                  Batal
+                  {t("task_cancel")}
                 </button>
               </div>
             </div>

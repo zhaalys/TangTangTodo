@@ -15,6 +15,7 @@ import { auth } from "../../lib/firebase";
 
 const LoginPage = () => {
   const [activeTab, setActiveTab] = useState<"login" | "signup">("login");
+  const [success, setSuccess] = useState(false);
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [fullName, setFullName] = useState("");
@@ -42,7 +43,10 @@ const LoginPage = () => {
           displayName: fullName,
         });
       }
-      router.push("/dashboard");
+      setSuccess(true);
+      setTimeout(() => {
+        router.push("/dashboard");
+      }, 2000);
     } catch (err: any) {
       console.error(err);
       setError(err.message || "Terjadi kesalahan saat otentikasi");
@@ -56,7 +60,10 @@ const LoginPage = () => {
     setError("");
     try {
       await signInWithGoogle();
-      router.push("/dashboard");
+      setSuccess(true);
+      setTimeout(() => {
+        router.push("/dashboard");
+      }, 2000);
     } catch (err: any) {
       console.error(err);
       setError(err.message || "Gagal masuk dengan Google");
@@ -67,6 +74,27 @@ const LoginPage = () => {
 
   return (
     <div className="bg-[#0f172a] font-display text-slate-900 dark:text-slate-100 min-h-screen flex items-center justify-center relative overflow-hidden">
+      {/* Success Animation Overlay */}
+      {success && (
+        <div className="fixed inset-0 z-[100] bg-[#0f172a] flex flex-col items-center justify-center animate-in fade-in duration-500">
+          <div className="relative w-32 h-32 md:w-48 md:h-48 bg-primary rounded-full shadow-[0_0_100px_rgba(13,89,242,0.5)] flex items-center justify-center animate-in zoom-in duration-1000 ease-out">
+            <Image
+              src="/tangtanglogo1.png"
+              alt="Tangtang Logo"
+              width={200}
+              height={200}
+              className="object-contain scale-125 animate-pulse"
+            />
+          </div>
+          <h2 className="mt-12 text-3xl md:text-5xl font-black tracking-tighter text-white animate-in slide-in-from-bottom-8 duration-700 delay-300">
+            Tangtang
+          </h2>
+          <p className="mt-4 text-primary font-bold tracking-[0.3em] uppercase text-sm animate-in fade-in duration-1000 delay-500">
+            Getting things ready...
+          </p>
+        </div>
+      )}
+
       {/* Absolute Branding - Pojok Kiri (Desktop Only) */}
       <div className="hidden md:block absolute top-6 left-6 md:top-10 md:left-10 z-50">
         <Brand className="scale-100 md:scale-110 lg:scale-125 transform origin-left" />

@@ -27,13 +27,13 @@ const DashboardPage = () => {
   const [dailyQuote, setDailyQuote] = useState("");
 
   const quotes = [
-    "Fokus pada proses, bukan hasil akhir. Setiap langkah kecil membawamu lebih dekat.",
-    "Jangan biarkan kemarin merenggut terlalu banyak dari hari ini.",
-    "Waktu paling tepat untuk mulai adalah sekarang. Tangtang hari ini dengan maksimal!",
-    "Disiplin adalah jembatan antara cita-cita dan pencapaian nyata.",
-    "Produktivitas bukan soal sibuk, tapi soal kemajuan yang nyata.",
-    "Satu-satunya cara melakukan pekerjaan besar adalah mencintai apa yang kamu kerjakan.",
-    "Istirahatlah jika lelah, jangan menyerah. Besok adalah peluang baru.",
+    t("quote_1"),
+    t("quote_2"),
+    t("quote_3"),
+    t("quote_4"),
+    t("quote_5"),
+    t("quote_6"),
+    t("quote_7"),
   ];
 
   useEffect(() => {

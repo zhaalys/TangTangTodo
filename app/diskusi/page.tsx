@@ -4,6 +4,7 @@ import React, { useState, useEffect } from "react";
 import Image from "next/image";
 import Navbar from "../components/Navbar";
 import { useAuth } from "../../context/AuthContext";
+import { useLanguage } from "../../context/LanguageContext";
 import {
   collection,
   addDoc,
@@ -41,6 +42,7 @@ interface Post {
 
 const DiskusiPage = () => {
   const { user } = useAuth();
+  const { t, language } = useLanguage();
   const [posts, setPosts] = useState<Post[]>([]);
   const [loading, setLoading] = useState(true);
   const [newPost, setNewPost] = useState("");
@@ -217,10 +219,10 @@ const DiskusiPage = () => {
         <header className="pt-10 flex flex-col md:flex-row md:justify-between md:items-center gap-6 z-10 lg:pt-16">
           <div className="flex flex-col">
             <h1 className="text-2xl lg:text-4xl font-extrabold tracking-tight">
-              Diskusi Komunitas
+              {t("community_title")}
             </h1>
             <p className="text-sm lg:text-base text-primary font-semibold flex items-center gap-1 mt-1">
-              Berbagi & Bertumbuh Bersama{" "}
+              {t("community_subtitle")}{" "}
               <span className="material-icons-round text-[16px]">groups</span>
             </p>
           </div>
@@ -244,7 +246,7 @@ const DiskusiPage = () => {
                   <textarea
                     value={newPost}
                     onChange={(e) => setNewPost(e.target.value)}
-                    placeholder="Apa yang ada di pikiranmu hari ini?"
+                    placeholder={t("post_placeholder")}
                     className="w-full bg-transparent border-none focus:ring-0 text-lg font-bold placeholder:opacity-30 resize-none min-h-[100px] outline-none"
                   />
                   <div className="flex items-center justify-between border-t border-slate-100 dark:border-white/5 pt-6 mt-4">
@@ -269,7 +271,9 @@ const DiskusiPage = () => {
                           image
                         </span>
                         <span className="text-[10px] uppercase font-black tracking-widest hidden sm:inline">
-                          {selectedFile ? "Foto Terpilih" : "Foto"}
+                          {selectedFile
+                            ? t("post_image") + "..."
+                            : t("post_image")}
                         </span>
                       </button>
                       <button
@@ -285,7 +289,7 @@ const DiskusiPage = () => {
                           poll
                         </span>
                         <span className="text-[10px] uppercase font-black tracking-widest hidden sm:inline">
-                          Poling
+                          {t("post_poll")}
                         </span>
                       </button>
 
@@ -314,10 +318,10 @@ const DiskusiPage = () => {
                       {isUploading ? (
                         <div className="flex items-center gap-2">
                           <div className="w-4 h-4 border-2 border-white/30 border-t-white rounded-full animate-spin"></div>
-                          <span>Mengirim...</span>
+                          <span>{t("post_sending")}</span>
                         </div>
                       ) : (
-                        "Kirim Post"
+                        t("post_send")
                       )}
                     </button>
                   </div>
@@ -488,10 +492,11 @@ const DiskusiPage = () => {
                         })}
                       </div>
                       <p className="text-[10px] font-black text-slate-500 uppercase tracking-widest pt-2">
-                        {post.poll.votedBy?.length || 0} Suara •{" "}
+                        {t("votes", { count: post.poll.votedBy?.length || 0 })}{" "}
+                        •{" "}
                         {post.poll.votedBy?.includes(user?.uid || "")
-                          ? "Sudah Memilih"
-                          : "Belum Memilih"}
+                          ? t("voted")
+                          : t("not_voted")}
                       </p>
                     </div>
                   )}
@@ -623,7 +628,7 @@ const DiskusiPage = () => {
           {/* Right Sidebar: Topics & Trends */}
           <div className="lg:col-span-4 hidden lg:block space-y-8">
             <div className="bg-white/5 dark:bg-surface-dark/50 rounded-[2.5rem] p-8 border border-white/5 backdrop-blur-xl">
-              <h3 className="font-black text-xl mb-6">Topik Populer</h3>
+              <h3 className="font-black text-xl mb-6">{t("popular_topics")}</h3>
               <div className="space-y-4">
                 {[
                   "Productivity",
@@ -649,13 +654,17 @@ const DiskusiPage = () => {
             <div className="bg-primary/10 rounded-[2.5rem] p-8 border border-primary/20 relative overflow-hidden">
               <div className="absolute -top-10 -right-10 w-32 h-32 bg-primary/20 rounded-full blur-3xl"></div>
               <h3 className="font-black text-xl text-primary mb-2">
-                Tantangan Mingguan
+                {t("weekly_challenge")}
               </h3>
               <p className="text-sm font-bold text-primary/70 mb-6 leading-relaxed">
-                Berhasil menyelesaikan 3 tugas 'Penting' dalam satu hari.
+                {language === "id"
+                  ? "Berhasil menyelesaikan 3 tugas 'Penting' dalam satu hari."
+                  : language === "ja"
+                    ? "1日で3つの「重要」なタスクを正常に完了しました。"
+                    : "Successfully completed 3 'Important' tasks in one day."}
               </p>
               <button className="w-full py-4 bg-primary text-white rounded-2xl font-black uppercase text-xs tracking-widest shadow-xl shadow-primary/20 primary-glow">
-                Gabung Tantangan
+                {t("join_challenge")}
               </button>
             </div>
           </div>
