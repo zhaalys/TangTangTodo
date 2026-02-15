@@ -161,15 +161,7 @@ const JurnalPage = () => {
             {/* Date Scroller */}
             <section>
               <h3 className="text-xs font-black text-slate-400 uppercase tracking-widest mb-4 ml-2">
-                {language === "id"
-                  ? "Kalender"
-                  : language === "en"
-                    ? "Calendar"
-                    : language === "ja"
-                      ? "カレンダー"
-                      : language === "ko"
-                        ? "캘린더"
-                        : "التقويم"}
+                {t("jurnal_calendar")}
               </h3>
               <div className="flex overflow-x-auto scroll-hide space-x-4 py-2">
                 {dates.map((d, idx) => (
@@ -201,15 +193,7 @@ const JurnalPage = () => {
             {/* Mood Picker */}
             <section>
               <h3 className="text-xs font-black text-slate-400 uppercase tracking-widest mb-4 ml-2">
-                {language === "id"
-                  ? "Suasana Hati"
-                  : language === "en"
-                    ? "Mood"
-                    : language === "ja"
-                      ? "気分"
-                      : language === "ko"
-                        ? "기분"
-                        : "المزاج"}
+                {t("jurnal_mood")}
               </h3>
               <div className="flex justify-around items-center bg-white/5 dark:bg-surface-dark/50 rounded-[2.5rem] p-4 border border-white/5 backdrop-blur-md">
                 {moods.map((mood) => (
@@ -240,15 +224,7 @@ const JurnalPage = () => {
             {/* Photo Moment Section */}
             <section className="hidden lg:block">
               <h3 className="text-xs font-black text-slate-400 uppercase tracking-widest mb-4 ml-2">
-                {language === "id"
-                  ? "Momen Terakhir"
-                  : language === "en"
-                    ? "Last Moment"
-                    : language === "ja"
-                      ? "最後の瞬間"
-                      : language === "ko"
-                        ? "마지막 순간"
-                        : "اللحظة الأخيرة"}
+                {t("jurnal_last_moment")}
               </h3>
               <div className="relative rounded-[3rem] overflow-hidden h-56 shadow-2xl group cursor-pointer text-white border border-white/5">
                 <div className="absolute inset-0 bg-slate-800 flex items-center justify-center">
@@ -259,7 +235,7 @@ const JurnalPage = () => {
                 <div className="absolute inset-0 bg-gradient-to-t from-background-dark/95 via-background-dark/20 to-transparent"></div>
                 <div className="absolute bottom-8 left-8 right-8">
                   <p className="text-[10px] font-black text-primary uppercase tracking-[0.2em] mb-2">
-                    {language === "id" ? "Aktivitas Malam" : "Night Activity"}
+                    {t("night_activity")}
                   </p>
                   <h4 className="text-2xl font-black leading-tight">
                     {language === "id"
@@ -314,9 +290,7 @@ const JurnalPage = () => {
                     ))}
                   </div>
                   <p className="text-red-500 font-black uppercase tracking-widest">
-                    {language === "id"
-                      ? "Perekaman Suara Aktif..."
-                      : "Voice Recording Active..."}
+                    {t("voice_recording_active")}
                   </p>
                 </div>
               )}
@@ -333,13 +307,7 @@ const JurnalPage = () => {
                   <span className="material-icons-round text-2xl">
                     {isRecording ? "stop" : "mic"}
                   </span>
-                  <span>
-                    {isRecording
-                      ? language === "id"
-                        ? "Selesai"
-                        : "Finish"
-                      : t("jurnal_save")}
-                  </span>
+                  <span>{isRecording ? t("finish") : t("jurnal_save")}</span>
                 </button>
                 <button
                   onClick={handleCamera}

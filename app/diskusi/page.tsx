@@ -657,11 +657,7 @@ const DiskusiPage = () => {
                 {t("weekly_challenge")}
               </h3>
               <p className="text-sm font-bold text-primary/70 mb-6 leading-relaxed">
-                {language === "id"
-                  ? "Berhasil menyelesaikan 3 tugas 'Penting' dalam satu hari."
-                  : language === "ja"
-                    ? "1日で3つの「重要」なタスクを正常に完了しました。"
-                    : "Successfully completed 3 'Important' tasks in one day."}
+                {t("challenge_desc")}
               </p>
               <button className="w-full py-4 bg-primary text-white rounded-2xl font-black uppercase text-xs tracking-widest shadow-xl shadow-primary/20 primary-glow">
                 {t("join_challenge")}

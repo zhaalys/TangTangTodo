@@ -108,6 +108,13 @@ export const translations: Translations = {
     ko: "주간 챌린지",
     ar: "التحدي الأسبوعي",
   },
+  challenge_desc: {
+    id: "Berhasil menyelesaikan 3 tugas 'Penting' dalam satu hari.",
+    en: "Successfully completed 3 'Important' tasks in one day.",
+    ja: "1日で3つの「重要」なタスクを正常に完了しました。",
+    ko: "하루에 '중요' 작업을 3개 성공적으로 완료했습니다.",
+    ar: "أكملت بنجاح 3 مهام 'مهمة' في يوم واحد.",
+  },
   join_challenge: {
     id: "Gabung Tantangan",
     en: "Join Challenge",
@@ -298,6 +305,34 @@ export const translations: Translations = {
     ar: "نعسان",
   },
   mood_sad: { id: "Sedih", en: "Sad", ja: "悲しい", ko: "悲しい", ar: "حزين" },
+  night_activity: {
+    id: "Aktivitas Malam",
+    en: "Night Activity",
+    ja: "夜のアクティビティ",
+    ko: "야간 활동",
+    ar: "نشاط ليلي",
+  },
+  catching_fireflies: {
+    id: "Menangkap Kunang-Kunang",
+    en: "Catching Fireflies",
+    ja: "ホタルを捕まえる",
+    ko: "반딧불이 잡기",
+    ar: "صيد اليراعات",
+  },
+  finish: {
+    id: "Selesai",
+    en: "Finish",
+    ja: "完了",
+    ko: "마침",
+    ar: "إنهاء",
+  },
+  voice_recording_active: {
+    id: "Perekaman Suara Aktif...",
+    en: "Voice Recording Active...",
+    ja: "音声録音中...",
+    ko: "음성 녹음 활성 중...",
+    ar: "تسجيل الصوت نشط...",
+  },
 
   // Dashboard
   hello: {
@@ -357,7 +392,7 @@ export const translations: Translations = {
     ar: "لا يوجد جدول",
   },
   motivation: {
-    id: "Motivation",
+    id: "Motivasi",
     en: "Motivation",
     ja: "モチベーション",
     ko: "동기 부여",
