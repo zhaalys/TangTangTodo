@@ -4,7 +4,9 @@ import React, { useState, useEffect, useRef } from "react";
 import Image from "next/image";
 import Link from "next/link";
 import { useAuth } from "../../context/AuthContext";
+import { useLanguage } from "../../context/LanguageContext";
 import Navbar from "../components/Navbar";
+import LanguagePicker from "../components/LanguagePicker";
 
 const backgrounds = [
   "/asset_background_image/backgroundtodo.jpg",
@@ -51,6 +53,7 @@ const songs = [
 
 const FocusPage = () => {
   const { user } = useAuth();
+  const { t } = useLanguage();
   const [time, setTime] = useState(25 * 60);
   const [isActive, setIsActive] = useState(false);
   const [bgIndex, setBgIndex] = useState(0);
@@ -134,8 +137,9 @@ const FocusPage = () => {
       <div className="relative z-10 flex flex-col items-center text-center px-6">
         <header className="mb-12 animate-in fade-in slide-in-from-top-4 duration-1000">
           <p className="text-white/80 text-lg font-black uppercase tracking-[0.3em] mb-2">
-            Ready for productivity, {user?.displayName?.split(" ")[0] || "Alex"}
-            ?
+            {t("ready_focus", {
+              name: user?.displayName?.split(" ")[0] || "Teman",
+            })}
           </p>
           <h2 className="text-white text-xl font-bold italic opacity-60">
             "Success all depends on the second letter"
@@ -153,7 +157,7 @@ const FocusPage = () => {
             onClick={handleStart}
             className="px-12 py-5 bg-white text-black rounded-full font-black uppercase tracking-widest text-sm hover:scale-110 active:scale-95 transition-all shadow-2xl"
           >
-            {isActive ? "Pause" : "Start"}
+            {isActive ? t("pause") : t("start")}
           </button>
           <button
             onClick={handleReset}
@@ -221,14 +225,22 @@ const FocusPage = () => {
             </button>
 
             <h3 className="text-3xl font-black text-white mb-10">
-              Focus Settings
+              {t("settings")}
             </h3>
 
-            <div className="space-y-12">
+            <div className="space-y-12 h-[60vh] overflow-y-auto pr-4 custom-scrollbar">
+              {/* Language Setting */}
+              <div>
+                <label className="text-xs font-black uppercase tracking-widest text-primary mb-4 block">
+                  {t("app_language")}
+                </label>
+                <LanguagePicker />
+              </div>
+
               {/* Time Setting */}
               <div>
                 <label className="text-xs font-black uppercase tracking-widest text-primary mb-4 block">
-                  Timer Duration (Minutes)
+                  {t("duration")}
                 </label>
                 <input
                   type="range"
@@ -250,7 +262,7 @@ const FocusPage = () => {
               {/* Music Selection */}
               <div>
                 <label className="text-xs font-black uppercase tracking-widest text-primary mb-4 block">
-                  Select Music
+                  {t("select_music")}
                 </label>
                 <div className="grid grid-cols-2 md:grid-cols-4 gap-3">
                   {songs.map((song, i) => (
@@ -268,7 +280,7 @@ const FocusPage = () => {
               {/* Background Selection */}
               <div>
                 <label className="text-xs font-black uppercase tracking-widest text-primary mb-4 block">
-                  Select Atmosphere
+                  {t("select_atmosphere")}
                 </label>
                 <div className="flex gap-4 overflow-x-auto pb-4 custom-scrollbar">
                   {backgrounds.map((bg, i) => (
@@ -286,9 +298,9 @@ const FocusPage = () => {
 
             <button
               onClick={() => setShowSettings(false)}
-              className="w-full py-5 bg-white text-black rounded-2xl font-black uppercase tracking-widest text-xs mt-12 hover:bg-primary hover:text-white transition-all"
+              className="w-full py-5 bg-white text-black rounded-2xl font-black uppercase tracking-widest text-xs mt-12 hover:bg-primary hover:text-white transition-all shadow-2xl"
             >
-              Save Settings
+              {t("save_settings")}
             </button>
           </div>
         </div>

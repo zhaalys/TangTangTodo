@@ -4,9 +4,11 @@ import React from "react";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
 import Brand from "./Brand";
+import { useLanguage } from "../../context/LanguageContext";
 
 const Navbar = () => {
   const pathname = usePathname();
+  const { t } = useLanguage();
 
   interface NavItem {
     href: string;
@@ -17,12 +19,12 @@ const Navbar = () => {
   }
 
   const navItems: NavItem[] = [
-    { href: "/dashboard", icon: "home", label: "Beranda" },
-    { href: "/focus", icon: "timer", label: "Focus" },
-    { href: "/tasks", icon: "task_alt", label: "Tugas" },
+    { href: "/dashboard", icon: "home", label: t("home") },
+    { href: "/focus", icon: "timer", label: t("focus") },
+    { href: "/tasks", icon: "task_alt", label: t("tasks") },
     { href: "/add", icon: "add", label: "Add", isCenter: true },
     { href: "/diskusi", icon: "forum", label: "Diskusi" },
-    { href: "/profile", icon: "person", label: "Profil" },
+    { href: "/profile", icon: "person", label: t("profile") },
   ];
 
   return (

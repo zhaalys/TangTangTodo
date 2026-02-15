@@ -5,8 +5,10 @@ import Link from "next/link";
 import { useRouter } from "next/navigation";
 import Navbar from "../components/Navbar";
 import ThemePicker from "../components/ThemePicker";
+import LanguagePicker from "../components/LanguagePicker";
 import { useAuth } from "../../context/AuthContext";
 import { useTheme } from "../../context/ThemeContext";
+import { useLanguage } from "../../context/LanguageContext";
 import Image from "next/image";
 import {
   collection,
@@ -21,6 +23,7 @@ import { updateProfile } from "firebase/auth";
 const ProfilePage = () => {
   const { user, logout } = useAuth();
   const { availableThemes } = useTheme();
+  const { t } = useLanguage();
   const router = useRouter();
   const [tasks, setTasks] = useState<any[]>([]);
   const [userPosts, setUserPosts] = useState<any[]>([]);
@@ -162,7 +165,7 @@ const ProfilePage = () => {
             <span className="material-icons-round">chevron_left</span>
           </Link>
           <h1 className="text-2xl lg:text-4xl font-extrabold tracking-tight">
-            Profil Pengguna
+            {t("user_profile")}
           </h1>
         </header>
 
@@ -415,9 +418,19 @@ const ProfilePage = () => {
               <ThemePicker />
             </section>
 
+            {/* Language Selection */}
+            <section className="mt-12">
+              <div className="flex justify-between items-center mb-8">
+                <h3 className="text-xl lg:text-3xl font-black">
+                  {t("app_language")}
+                </h3>
+              </div>
+              <LanguagePicker />
+            </section>
+
             {/* Menu Items */}
             <section className="space-y-4 pt-10">
-              <h3 className="text-xl font-black mb-6">Pengaturan Akun</h3>
+              <h3 className="text-xl font-black mb-6">Account Settings</h3>
               <div className="grid md:grid-cols-2 gap-4">
                 {[
                   {

@@ -4,6 +4,7 @@ import React, { useState, useEffect } from "react";
 import Link from "next/link";
 import Navbar from "../components/Navbar";
 import { useAuth } from "../../context/AuthContext";
+import { useLanguage } from "../../context/LanguageContext";
 import {
   collection,
   query,
@@ -16,6 +17,7 @@ import { db } from "../../lib/firebase";
 
 const DashboardPage = () => {
   const { user } = useAuth();
+  const { t } = useLanguage();
   const [tasks, setTasks] = useState<any[]>([]);
   const [loading, setLoading] = useState(true);
   const [dailyQuote, setDailyQuote] = useState("");
@@ -69,10 +71,10 @@ const DashboardPage = () => {
         <header className="pt-12 flex justify-between items-center z-10 lg:pt-16">
           <div className="flex flex-col">
             <h1 className="text-2xl lg:text-4xl font-extrabold tracking-tight">
-              Halo, {user?.displayName?.split(" ")[0] || "Teman"}!
+              {t("hello")}, {user?.displayName?.split(" ")[0] || "Teman"}!
             </h1>
             <p className="text-sm lg:text-base text-primary font-semibold flex items-center gap-1 mt-1">
-              Ada {stats.today} tugas hari ini{" "}
+              {t("today_tasks_count", { count: stats.today })}{" "}
               <span className="material-icons-round text-[16px] lg:text-[20px]">
                 auto_awesome
               </span>
@@ -109,7 +111,7 @@ const DashboardPage = () => {
                 </span>
                 <p className="text-3xl font-bold">{stats.completed}</p>
                 <p className="text-sm font-semibold text-slate-500 uppercase tracking-widest mt-1">
-                  Selesai
+                  {t("finished")}
                 </p>
               </div>
               <div className="bg-accent-blue/10 border border-accent-blue/20 p-6 rounded-3xl transition-all hover:shadow-lg hover:shadow-accent-blue/5">
@@ -118,7 +120,7 @@ const DashboardPage = () => {
                 </span>
                 <p className="text-3xl font-bold">{stats.pending}</p>
                 <p className="text-sm font-semibold text-slate-500 uppercase tracking-widest mt-1">
-                  Tertunda
+                  {t("pending")}
                 </p>
               </div>
             </section>
@@ -127,13 +129,13 @@ const DashboardPage = () => {
             <section>
               <div className="flex justify-between items-center mb-6">
                 <h3 className="font-black text-xl lg:text-2xl tracking-tight">
-                  Tugas Mendatang
+                  {t("upcoming_tasks")}
                 </h3>
                 <Link
                   href="/tasks"
                   className="text-sm font-black text-primary hover:underline underline-offset-4"
                 >
-                  Lihat Semua
+                  {t("view_all")}
                 </Link>
               </div>
               <div className="grid gap-4 sm:grid-cols-2 lg:grid-cols-1 xl:grid-cols-2">
@@ -203,7 +205,7 @@ const DashboardPage = () => {
                   </div>
                   <div className="flex flex-col">
                     <span className="text-white/60 text-[10px] font-black uppercase tracking-[0.2em]">
-                      Motivation
+                      {t("motivation")}
                     </span>
                     <span className="text-white font-black text-sm uppercase">
                       Tangtang Daily
@@ -219,7 +221,7 @@ const DashboardPage = () => {
                 <span className="material-icons-round text-primary">
                   calendar_today
                 </span>
-                Agenda Hari Ini
+                {t("agenda_today")}
               </h4>
               <div className="space-y-6">
                 {tasks.filter((t) => t.isToday && !t.completed).length > 0 ? (
@@ -245,7 +247,7 @@ const DashboardPage = () => {
                       event_busy
                     </span>
                     <p className="text-[10px] uppercase font-black tracking-widest">
-                      Agenda Kosong
+                      {t("agenda_empty")}
                     </p>
                   </div>
                 )}
