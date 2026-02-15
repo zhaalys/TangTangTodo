@@ -44,7 +44,7 @@ const ThemePicker = () => {
         <button
           key={t}
           onClick={() => setTheme(t)}
-          className={`group relative flex items-center gap-5 p-6 rounded-[2.5rem] bg-slate-900/40 border transition-all duration-300 ${
+          className={`group relative flex items-center gap-4 md:gap-5 p-4 md:p-6 rounded-[2rem] md:rounded-[2.5rem] bg-slate-900/40 border transition-all duration-300 ${
             theme === t
               ? "border-primary/50 bg-primary/5 ring-1 ring-primary/20 shadow-[0_20px_40px_rgba(13,89,242,0.15)] scale-[1.02]"
               : "border-white/5 hover:border-white/10 hover:bg-white/5"

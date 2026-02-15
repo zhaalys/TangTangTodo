@@ -30,7 +30,7 @@ const Navbar = () => {
   return (
     <>
       {/* Mobile Bottom Navigation */}
-      <nav className="lg:hidden fixed bottom-0 left-1/2 -translate-x-1/2 w-full h-[4.5rem] bg-[#0f172a]/95 backdrop-blur-2xl border-t border-white/5 flex justify-between items-center px-4 z-50">
+      <nav className="lg:hidden fixed bottom-0 left-1/2 -translate-x-1/2 w-full h-[4rem] bg-[#0f172a]/95 backdrop-blur-2xl border-t border-white/5 flex justify-between items-center px-2 z-50">
         {navItems
           .filter((item) => !item.desktopOnly)
           .map((item) => {
@@ -39,9 +39,9 @@ const Navbar = () => {
                 <Link
                   key={item.href}
                   href={item.href}
-                  className="w-12 h-12 -mt-10 bg-primary rounded-full flex items-center justify-center shadow-lg shadow-primary/30 border-[3px] border-[#0f172a] transition-transform hover:scale-110 active:scale-95 z-10"
+                  className="w-11 h-11 -mt-10 bg-primary rounded-full flex items-center justify-center shadow-lg shadow-primary/30 border-[3px] border-[#0f172a] transition-transform hover:scale-110 active:scale-95 z-10"
                 >
-                  <span className="material-icons-round text-white text-3xl">
+                  <span className="material-icons-round text-white text-2xl">
                     {item.icon}
                   </span>
                 </Link>
@@ -53,18 +53,22 @@ const Navbar = () => {
               <Link
                 key={item.href}
                 href={item.href}
-                className={`flex flex-col items-center gap-1 transition-all active:scale-90 ${
+                className={`flex flex-col items-center gap-0.5 transition-all active:scale-90 flex-1 ${
                   isActive
-                    ? "text-primary scale-110"
+                    ? "text-primary scale-105"
                     : "text-slate-400 dark:text-slate-500 hover:text-primary"
                 }`}
               >
-                <span
-                  className={`material-icons-round text-xl ${isActive ? "fill-primary" : ""}`}
+                <div
+                  className={`p-1 rounded-xl transition-colors ${isActive ? "bg-primary/10" : ""}`}
                 >
-                  {item.icon}
-                </span>
-                <span className="text-[8px] font-black uppercase tracking-widest text-center truncate w-12">
+                  <span
+                    className={`material-icons-round text-xl ${isActive ? "fill-primary" : ""}`}
+                  >
+                    {item.icon}
+                  </span>
+                </div>
+                <span className="text-[7px] font-black uppercase tracking-widest text-center truncate w-full px-1">
                   {item.label}
                 </span>
               </Link>

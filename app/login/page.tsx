@@ -76,7 +76,7 @@ const LoginPage = () => {
     <div className="bg-[#0f172a] font-display text-slate-900 dark:text-slate-100 min-h-screen flex items-center justify-center relative overflow-hidden">
       {/* Success Animation Overlay */}
       {success && (
-        <div className="fixed inset-0 z-[100] bg-[#0f172a] flex flex-col items-center justify-center animate-in fade-in duration-500">
+        <div className="fixed inset-0 z-[100] bg-[#0f172a] flex flex-col items-center justify-center animate-in fade-in duration-500 px-6 text-center">
           <div className="relative w-32 h-32 md:w-48 md:h-48 bg-primary rounded-full shadow-[0_0_100px_rgba(13,89,242,0.5)] flex items-center justify-center animate-in zoom-in duration-1000 ease-out">
             <Image
               src="/tangtanglogo1.png"
@@ -86,10 +86,10 @@ const LoginPage = () => {
               className="object-contain scale-125 animate-pulse"
             />
           </div>
-          <h2 className="mt-12 text-3xl md:text-5xl font-black tracking-tighter text-white animate-in slide-in-from-bottom-8 duration-700 delay-300">
+          <h2 className="mt-12 text-4xl md:text-5xl lg:text-7xl font-black tracking-tighter text-white animate-in slide-in-from-bottom-8 duration-700 delay-300 w-full">
             Tangtang
           </h2>
-          <p className="mt-4 text-primary font-bold tracking-[0.3em] uppercase text-sm animate-in fade-in duration-1000 delay-500">
+          <p className="mt-4 text-primary font-bold tracking-[0.3em] uppercase text-xs md:text-sm animate-in fade-in duration-1000 delay-500">
             Getting things ready...
           </p>
         </div>
@@ -147,7 +147,7 @@ const LoginPage = () => {
 
         {/* Auth Box */}
         <div className="w-full max-w-[400px] md:w-1/2 flex flex-col items-center z-10 animate-in slide-in-from-right-12 duration-1000">
-          <div className="w-full bg-slate-900/50 dark:bg-surface-dark/80 backdrop-blur-2xl border border-white/5 p-6 md:p-8 lg:p-10 rounded-[2.5rem] md:rounded-[3rem] shadow-2xl relative overflow-hidden">
+          <div className="w-full bg-slate-900/50 dark:bg-surface-dark/80 backdrop-blur-2xl border border-white/5 p-5 md:p-8 lg:p-10 rounded-[2.5rem] md:rounded-[3rem] shadow-2xl relative overflow-hidden">
             <div className="absolute top-0 right-0 w-24 h-24 md:w-32 md:h-32 bg-primary/5 rounded-full blur-3xl -translate-y-1/2 translate-x-1/2"></div>
 
             {/* Tab Switcher */}
@@ -220,11 +220,11 @@ const LoginPage = () => {
                     Password
                   </label>
                   <div className="relative">
-                    <span className="material-icons-round absolute left-5 top-1/2 -translate-y-1/2 text-slate-400 text-2xl">
+                    <span className="material-icons-round absolute left-5 top-1/2 -translate-y-1/2 text-slate-400 text-xl md:text-2xl">
                       lock_open
                     </span>
                     <input
-                      className="w-full pl-14 pr-14 py-5 rounded-2xl bg-white/5 border-2 border-transparent focus:border-primary focus:bg-white/10 focus:outline-none transition-all font-bold text-lg text-white"
+                      className="w-full pl-12 md:pl-14 pr-12 md:pr-14 py-4 md:py-5 rounded-2xl bg-white/5 border-2 border-transparent focus:border-primary focus:bg-white/10 focus:outline-none transition-all font-bold text-base md:text-lg text-white"
                       placeholder="••••••••"
                       type={showPassword ? "text" : "password"}
                       value={password}

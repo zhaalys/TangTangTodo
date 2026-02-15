@@ -74,7 +74,7 @@ const DashboardPage = () => {
         {/* Header */}
         <header className="pt-12 flex justify-between items-center z-10 lg:pt-16">
           <div className="flex flex-col">
-            <h1 className="text-2xl lg:text-4xl font-extrabold tracking-tight">
+            <h1 className="text-xl md:text-2xl lg:text-4xl font-extrabold tracking-tight">
               {t("hello")}, {user?.displayName?.split(" ")[0] || "Teman"}!
             </h1>
             <p className="text-sm lg:text-base text-primary font-semibold flex items-center gap-1 mt-1">
@@ -114,21 +114,25 @@ const DashboardPage = () => {
           <div className="lg:col-span-8 space-y-10">
             {/* Stats Section */}
             <section className="grid grid-cols-2 gap-4">
-              <div className="bg-primary/10 border border-primary/20 p-6 rounded-3xl transition-all hover:shadow-lg hover:shadow-primary/5">
-                <span className="material-icons-round text-primary mb-3 text-3xl">
+              <div className="bg-primary/10 border border-primary/20 p-4 md:p-6 rounded-3xl transition-all hover:shadow-lg hover:shadow-primary/5">
+                <span className="material-icons-round text-primary mb-2 md:mb-3 text-2xl md:text-3xl">
                   check_circle
                 </span>
-                <p className="text-3xl font-bold">{stats.completed}</p>
-                <p className="text-sm font-semibold text-slate-500 uppercase tracking-widest mt-1">
+                <p className="text-2xl md:text-3xl font-bold">
+                  {stats.completed}
+                </p>
+                <p className="text-[10px] md:text-sm font-semibold text-slate-500 uppercase tracking-widest mt-1">
                   {t("finished")}
                 </p>
               </div>
-              <div className="bg-accent-blue/10 border border-accent-blue/20 p-6 rounded-3xl transition-all hover:shadow-lg hover:shadow-accent-blue/5">
-                <span className="material-icons-round text-accent-blue mb-3 text-3xl">
+              <div className="bg-accent-blue/10 border border-accent-blue/20 p-4 md:p-6 rounded-3xl transition-all hover:shadow-lg hover:shadow-accent-blue/5">
+                <span className="material-icons-round text-accent-blue mb-2 md:mb-3 text-2xl md:text-3xl">
                   pending_actions
                 </span>
-                <p className="text-3xl font-bold">{stats.pending}</p>
-                <p className="text-sm font-semibold text-slate-500 uppercase tracking-widest mt-1">
+                <p className="text-2xl md:text-3xl font-bold">
+                  {stats.pending}
+                </p>
+                <p className="text-[10px] md:text-sm font-semibold text-slate-500 uppercase tracking-widest mt-1">
                   {t("pending")}
                 </p>
               </div>
@@ -200,10 +204,10 @@ const DashboardPage = () => {
             <section>
               <div className="bg-gradient-to-br from-primary to-accent-blue p-8 rounded-[3rem] relative overflow-hidden shadow-2xl primary-glow group">
                 <div className="absolute top-0 right-0 w-48 h-48 bg-white/20 rounded-full -translate-y-1/2 translate-x-1/2 blur-3xl transition-transform group-hover:scale-125"></div>
-                <span className="material-icons-round text-white/30 text-6xl absolute -bottom-4 -right-4 opacity-50">
+                <span className="material-icons-round text-white/30 text-5xl md:text-6xl absolute -bottom-4 -right-4 opacity-50">
                   format_quote
                 </span>
-                <p className="relative z-10 text-white font-black italic leading-relaxed text-xl lg:text-2xl">
+                <p className="relative z-10 text-white font-black italic leading-relaxed text-lg lg:text-2xl">
                   "{dailyQuote}"
                 </p>
                 <div className="mt-8 flex items-center gap-3 relative z-10">
