@@ -146,8 +146,8 @@ const FocusPage = () => {
           </h2>
         </header>
 
-        <div className="relative mb-12 animate-pulse-slow">
-          <h1 className="text-[12rem] md:text-[18rem] font-black leading-none tracking-tighter text-white drop-shadow-[0_0_50px_rgba(255,255,255,0.3)]">
+        <div className="relative mb-8 md:mb-12 animate-pulse-slow">
+          <h1 className="text-[8rem] md:text-[18rem] font-black leading-none tracking-tighter text-white drop-shadow-[0_0_50px_rgba(255,255,255,0.3)]">
             {formatTime(time)}
           </h1>
         </div>
