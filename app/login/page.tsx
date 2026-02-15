@@ -111,7 +111,7 @@ const LoginPage = () => {
               src="/tangtanglogo1.png"
               alt="Tangtang Logo"
               fill
-              className="object-cover scale-150"
+              className="object-cover scale-[1.3] md:scale-150"
             />
           </div>
           <h1 className="text-3xl md:text-5xl lg:text-7xl font-black tracking-tighter mb-2 md:mb-4">
@@ -181,11 +181,11 @@ const LoginPage = () => {
                       Full Name
                     </label>
                     <div className="relative">
-                      <span className="material-icons-round absolute left-5 top-1/2 -translate-y-1/2 text-slate-400 text-2xl">
+                      <span className="material-icons-round absolute left-5 top-1/2 -translate-y-1/2 text-slate-400 text-xl md:text-2xl">
                         person_outline
                       </span>
                       <input
-                        className="w-full pl-14 pr-6 py-5 rounded-2xl bg-white/5 border-2 border-transparent focus:border-primary focus:bg-white/10 focus:outline-none transition-all font-bold text-lg text-white"
+                        className="w-full pl-12 md:pl-14 pr-6 py-4 md:py-5 rounded-2xl bg-white/5 border-2 border-transparent focus:border-primary focus:bg-white/10 focus:outline-none transition-all font-bold text-base md:text-lg text-white"
                         placeholder="Your Name"
                         type="text"
                         value={fullName}
@@ -201,11 +201,11 @@ const LoginPage = () => {
                     Email Address
                   </label>
                   <div className="relative">
-                    <span className="material-icons-round absolute left-5 top-1/2 -translate-y-1/2 text-slate-400 text-2xl">
+                    <span className="material-icons-round absolute left-5 top-1/2 -translate-y-1/2 text-slate-400 text-xl md:text-2xl">
                       mail_outline
                     </span>
                     <input
-                      className="w-full pl-14 pr-6 py-5 rounded-2xl bg-white/5 border-2 border-transparent focus:border-primary focus:bg-white/10 focus:outline-none transition-all font-bold text-lg text-white"
+                      className="w-full pl-12 md:pl-14 pr-6 py-4 md:py-5 rounded-2xl bg-white/5 border-2 border-transparent focus:border-primary focus:bg-white/10 focus:outline-none transition-all font-bold text-base md:text-lg text-white"
                       placeholder="hello@tangtang.app"
                       type="email"
                       value={email}
