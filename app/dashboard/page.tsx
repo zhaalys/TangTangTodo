@@ -3,6 +3,7 @@
 import React, { useState, useEffect } from "react";
 import Link from "next/link";
 import Navbar from "../components/Navbar";
+import FocusTimer from "../components/FocusTimer";
 import { useAuth } from "../../context/AuthContext";
 import {
   collection,
@@ -107,6 +108,9 @@ const DashboardPage = () => {
                 </p>
               </div>
             </section>
+
+            {/* Focus Timer Section */}
+            <FocusTimer />
 
             {/* Upcoming Tasks */}
             <section>
