@@ -3,6 +3,7 @@
 import React, { useState, useEffect } from "react";
 import Link from "next/link";
 import Navbar from "../components/Navbar";
+import LanguagePicker from "../components/LanguagePicker";
 import { useAuth } from "../../context/AuthContext";
 import { useLanguage } from "../../context/LanguageContext";
 import {
@@ -80,24 +81,29 @@ const DashboardPage = () => {
               </span>
             </p>
           </div>
-          <Link
-            href="/profile"
-            className="w-12 h-12 lg:w-16 lg:h-16 rounded-full border-2 border-primary/20 p-0.5 overflow-hidden transition-transform hover:scale-105"
-          >
-            <div className="w-full h-full rounded-full bg-primary/20 flex items-center justify-center relative">
-              {user?.photoURL ? (
-                <img
-                  src={user.photoURL}
-                  alt="Profile"
-                  className="w-full h-full object-cover rounded-full"
-                />
-              ) : (
-                <span className="material-icons-round text-primary text-2xl lg:text-3xl">
-                  person
-                </span>
-              )}
+          <div className="flex items-center gap-4">
+            <div className="hidden md:block">
+              <LanguagePicker />
             </div>
-          </Link>
+            <Link
+              href="/profile"
+              className="w-12 h-12 lg:w-16 lg:h-16 rounded-full border-2 border-primary/20 p-0.5 overflow-hidden transition-transform hover:scale-105"
+            >
+              <div className="w-full h-full rounded-full bg-primary/20 flex items-center justify-center relative">
+                {user?.photoURL ? (
+                  <img
+                    src={user.photoURL}
+                    alt="Profile"
+                    className="w-full h-full object-cover rounded-full"
+                  />
+                ) : (
+                  <span className="material-icons-round text-primary text-2xl lg:text-3xl">
+                    person
+                  </span>
+                )}
+              </div>
+            </Link>
+          </div>
         </header>
 
         <div className="lg:grid lg:grid-cols-12 lg:gap-12 lg:mt-12 mt-8">
