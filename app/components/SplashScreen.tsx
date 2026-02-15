@@ -38,36 +38,41 @@ const SplashScreen: React.FC = () => {
 
         {/* Logo Container */}
         <div
-          className={`relative z-10 transition-all duration-1000 transform ${isVisible ? "scale-100 opacity-100" : "scale-150 opacity-0"}`}
+          className={`relative z-10 transition-all duration-1000 transform flex flex-col items-center ${
+            isVisible ? "scale-100 opacity-100" : "scale-110 opacity-0"
+          }`}
         >
-          <div className="w-32 h-32 md:w-48 md:h-48 relative animate-float">
+          {/* Mascot Image */}
+          <div className="w-48 h-48 md:w-64 md:h-64 relative animate-float-glow">
             <Image
               src="/tangtanglogo1.png"
               alt="TangTang Logo"
               fill
-              className="object-contain drop-shadow-[0_0_30px_rgba(var(--primary-rgb),0.5)]"
+              className="object-contain drop-shadow-[0_0_50px_rgba(59,130,246,0.5)]"
               priority
             />
           </div>
 
-          {/* Logo Text / Pulse Effect */}
-          <div className="mt-8 text-center overflow-hidden">
-            <h1 className="text-white text-3xl md:text-5xl font-black tracking-[0.2em] uppercase animate-in slide-in-from-bottom-8 duration-700">
+          {/* Logo Text */}
+          <div className="mt-12 text-center flex flex-col items-center w-full">
+            <h1 className="text-white text-4xl md:text-7xl font-black tracking-[0.3em] uppercase mb-4 drop-shadow-2xl">
               TangTang
             </h1>
-            <div className="h-1 shadow-glow bg-primary mt-2 rounded-full animate-progress-expand"></div>
+            <div className="w-48 md:w-80 h-1.5 shadow-glow bg-primary rounded-full animate-progress-expand shadow-[0_0_15px_rgba(59,130,246,0.8)]"></div>
           </div>
         </div>
       </div>
 
       <style jsx>{`
-        @keyframes float {
+        @keyframes float-glow {
           0%,
           100% {
-            transform: translateY(0) rotate(0deg);
+            transform: translateY(0);
+            filter: drop-shadow(0 0 20px rgba(59, 130, 246, 0.3));
           }
           50% {
-            transform: translateY(-20px) rotate(5deg);
+            transform: translateY(-15px);
+            filter: drop-shadow(0 0 40px rgba(59, 130, 246, 0.6));
           }
         }
         @keyframes progress-expand {
@@ -76,18 +81,15 @@ const SplashScreen: React.FC = () => {
             opacity: 0;
           }
           to {
-            width: 100%;
             opacity: 1;
           }
         }
-        .animate-float {
-          animation: float 3s ease-in-out infinite;
+        .animate-float-glow {
+          animation: float-glow 3s ease-in-out infinite;
         }
         .animate-progress-expand {
           animation: progress-expand 1.5s cubic-bezier(0.65, 0, 0.35, 1)
             forwards;
-          margin-left: auto;
-          margin-right: auto;
         }
         .animate-pulse-slow {
           animation: pulse 4s cubic-bezier(0.4, 0, 0.6, 1) infinite;
