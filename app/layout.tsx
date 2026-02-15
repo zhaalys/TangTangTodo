@@ -3,6 +3,7 @@ import { Manrope, Plus_Jakarta_Sans } from "next/font/google";
 import { AuthProvider } from "../context/AuthContext";
 import { ThemeProvider } from "../context/ThemeContext";
 import { LanguageProvider } from "../context/LanguageContext";
+import SplashScreen from "./components/SplashScreen";
 import "./globals.css";
 
 const manrope = Manrope({
@@ -51,6 +52,7 @@ export default function RootLayout({
       <body
         className={`${manrope.variable} ${plusJakartaSans.variable} antialiased`}
       >
+        <SplashScreen />
         <AuthProvider>
           <ThemeProvider>
             <LanguageProvider>{children}</LanguageProvider>
