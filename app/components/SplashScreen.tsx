@@ -32,9 +32,9 @@ const SplashScreen: React.FC = () => {
         isVisible ? "opacity-100" : "opacity-0 pointer-events-none"
       }`}
     >
-      <div className="relative flex flex-col items-center">
+      <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 flex flex-col items-center w-full max-w-[90vw]">
         {/* Animated Background Glow */}
-        <div className="absolute inset-0 bg-primary/20 rounded-full blur-[100px] animate-pulse-slow scale-150"></div>
+        <div className="absolute inset-0 bg-primary/20 rounded-full blur-[120px] animate-pulse-slow scale-150"></div>
 
         {/* Logo Container */}
         <div
@@ -43,22 +43,22 @@ const SplashScreen: React.FC = () => {
           }`}
         >
           {/* Mascot Image */}
-          <div className="w-48 h-48 md:w-64 md:h-64 relative animate-float-glow">
+          <div className="w-64 h-64 md:w-[450px] md:h-[450px] relative animate-float-glow">
             <Image
               src="/tangtanglogo1.png"
               alt="TangTang Logo"
               fill
-              className="object-contain drop-shadow-[0_0_50px_rgba(59,130,246,0.5)]"
+              className="object-contain drop-shadow-[0_0_60px_rgba(59,130,246,0.6)]"
               priority
             />
           </div>
 
           {/* Logo Text */}
-          <div className="mt-12 text-center flex flex-col items-center w-full">
-            <h1 className="text-white text-4xl md:text-7xl font-black tracking-[0.3em] uppercase mb-4 drop-shadow-2xl">
+          <div className="mt-16 text-center flex flex-col items-center w-full">
+            <h1 className="text-white text-5xl md:text-9xl font-black tracking-[0.3em] uppercase mb-6 drop-shadow-[0_10px_30px_rgba(0,0,0,0.5)]">
               TangTang
             </h1>
-            <div className="w-48 md:w-80 h-1.5 shadow-glow bg-primary rounded-full animate-progress-expand shadow-[0_0_15px_rgba(59,130,246,0.8)]"></div>
+            <div className="w-64 md:w-[500px] h-2 shadow-glow bg-primary rounded-full animate-progress-expand shadow-[0_0_30px_rgba(59,130,246,1)]"></div>
           </div>
         </div>
       </div>
