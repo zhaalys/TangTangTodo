@@ -4,7 +4,9 @@ import React, { useState, useEffect } from "react";
 import Link from "next/link";
 import { useRouter } from "next/navigation";
 import Navbar from "../components/Navbar";
+import ThemePicker from "../components/ThemePicker";
 import { useAuth } from "../../context/AuthContext";
+import { useTheme } from "../../context/ThemeContext";
 import Image from "next/image";
 import {
   collection,
@@ -18,6 +20,7 @@ import { updateProfile } from "firebase/auth";
 
 const ProfilePage = () => {
   const { user, logout } = useAuth();
+  const { availableThemes } = useTheme();
   const router = useRouter();
   const [tasks, setTasks] = useState<any[]>([]);
   const [userPosts, setUserPosts] = useState<any[]>([]);
@@ -399,8 +402,21 @@ const ProfilePage = () => {
               </div>
             </div>
 
-            {/* Menu Items (Relocated below stats for desktop, original order preserved) */}
-            <section className="space-y-4">
+            {/* Theme Selection */}
+            <section className="mt-12">
+              <div className="flex justify-between items-center mb-8">
+                <h3 className="text-xl lg:text-3xl font-black">
+                  Tema Aplikasi
+                </h3>
+                <span className="px-4 py-1.5 bg-primary/10 text-primary text-[10px] font-black uppercase rounded-full border border-primary/20">
+                  {availableThemes.length} Pilihan
+                </span>
+              </div>
+              <ThemePicker />
+            </section>
+
+            {/* Menu Items */}
+            <section className="space-y-4 pt-10">
               <h3 className="text-xl font-black mb-6">Pengaturan Akun</h3>
               <div className="grid md:grid-cols-2 gap-4">
                 {[

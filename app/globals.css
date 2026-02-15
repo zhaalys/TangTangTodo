@@ -14,12 +14,12 @@ body {
   --font-display: var(--font-manrope), sans-serif;
   --font-jakarta: var(--font-jakarta), sans-serif;
 
-  --color-primary: #0d59f2;
-  --color-primary-blue: #0d59f2;
+  --color-primary: var(--color-primary);
+  --color-primary-blue: var(--color-primary-blue);
   --color-background-light: #0f172a; /* Changed from white to deep blue */
   --color-background-dark: #0f172a;
   --color-surface-dark: #1e293b;
-  --color-accent-blue: #3b82f6;
+  --color-accent-blue: var(--color-accent-blue);
   --color-accent-purple: #6366f1;
 
   --radius-DEFAULT: 1rem;
@@ -39,7 +39,7 @@ body {
   }
 
   .primary-glow {
-    box-shadow: 0 0 30px 0 rgba(13, 89, 242, 0.4);
+    box-shadow: 0 0 30px 0 var(--primary-glow-color);
   }
 
   .electric-glow {
