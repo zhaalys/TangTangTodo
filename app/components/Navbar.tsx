@@ -18,6 +18,7 @@ const Navbar = () => {
 
   const navItems: NavItem[] = [
     { href: "/dashboard", icon: "home", label: "Beranda" },
+    { href: "/focus", icon: "timer", label: "Focus" },
     { href: "/tasks", icon: "task_alt", label: "Tugas" },
     { href: "/add", icon: "add", label: "Add", isCenter: true },
     { href: "/diskusi", icon: "forum", label: "Diskusi" },
