@@ -36,17 +36,17 @@ const songs = [
   },
   {
     name: "Silhouette (Naruto)",
-    path: "/asset_lagu/KANA BOON - Silhouette  (Opening Naruto ) _ Lirik Terjemahan.mp4",
+    path: "/asset_lagu/naruto_silhouette.mp4",
   },
   {
     name: "Orange (Shigatsu)",
-    path: "/asset_lagu/Lagu jepang ORANGE lirik lagu + terjemah bahasa indonesia.mp4",
+    path: "/asset_lagu/shigatsu_orange.mp4",
   },
   {
     name: "Memories (One Piece)",
-    path: "/asset_lagu/Memories - Maki Otsuki _ One Piece Ending Song 1 _ Lirik + Terjemahan Indonesia.mp4",
+    path: "/asset_lagu/one_piece_memories.mp4",
   },
-  { name: "Rapsodi (JKT48)", path: "/asset_lagu/Rapsodi - JKT48 (Lirik).mp4" },
+  { name: "Rapsodi (JKT48)", path: "/asset_lagu/jkt48_rapsodi.mp4" },
 ];
 
 const FocusPage = () => {
