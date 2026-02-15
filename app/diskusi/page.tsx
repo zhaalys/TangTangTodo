@@ -17,7 +17,8 @@ import {
   arrayRemove,
   increment,
 } from "firebase/firestore";
-import { db, auth } from "../../lib/firebase";
+import { db, auth, storage } from "../../lib/firebase";
+import { ref, uploadBytes, getDownloadURL } from "firebase/storage";
 
 interface Post {
   id: string;
@@ -44,6 +45,9 @@ const DiskusiPage = () => {
   const [loading, setLoading] = useState(true);
   const [newPost, setNewPost] = useState("");
   const [imageUrl, setImageUrl] = useState("");
+  const [selectedFile, setSelectedFile] = useState<File | null>(null);
+  const [imagePreview, setImagePreview] = useState<string | null>(null);
+  const [isUploading, setIsUploading] = useState(false);
   const [showImageInput, setShowImageInput] = useState(false);
   const [showPollInput, setShowPollInput] = useState(false);
   const [pollQuestion, setPollQuestion] = useState("");
@@ -84,9 +88,34 @@ const DiskusiPage = () => {
     return () => unsubscribe();
   }, [activeReplyPost]);
 
+  const handleFileChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    const file = e.target.files?.[0];
+    if (file) {
+      setSelectedFile(file);
+      const reader = new FileReader();
+      reader.onloadend = () => {
+        setImagePreview(reader.result as string);
+      };
+      reader.readAsDataURL(file);
+    }
+  };
+
+  const uploadImage = async (file: File) => {
+    const storageRef = ref(storage, `posts/${Date.now()}_${file.name}`);
+    await uploadBytes(storageRef, file);
+    return await getDownloadURL(storageRef);
+  };
+
   const handlePost = async () => {
-    if (!newPost.trim() || !user) return;
+    if ((!newPost.trim() && !selectedFile) || !user) return;
+    setIsUploading(true);
     try {
+      let finalImageUrl = imageUrl;
+
+      if (selectedFile) {
+        finalImageUrl = await uploadImage(selectedFile);
+      }
+
       const postData: any = {
         user: user.displayName || "User",
         avatar: user.photoURL || "",
@@ -99,7 +128,7 @@ const DiskusiPage = () => {
         createdAt: serverTimestamp(),
       };
 
-      if (imageUrl) postData.imageUrl = imageUrl;
+      if (finalImageUrl) postData.imageUrl = finalImageUrl;
       if (showPollInput && pollQuestion && pollOptions.every((o) => o.trim())) {
         postData.poll = {
           question: pollQuestion,
@@ -111,12 +140,16 @@ const DiskusiPage = () => {
       await addDoc(collection(db, "posts"), postData);
       setNewPost("");
       setImageUrl("");
+      setSelectedFile(null);
+      setImagePreview(null);
       setShowImageInput(false);
       setShowPollInput(false);
       setPollQuestion("");
       setPollOptions(["", ""]);
     } catch (err) {
       console.error("Gagal mengirim postingan", err);
+    } finally {
+      setIsUploading(false);
     }
   };
 
@@ -216,24 +249,35 @@ const DiskusiPage = () => {
                   />
                   <div className="flex items-center justify-between border-t border-slate-100 dark:border-white/5 pt-6 mt-4">
                     <div className="flex gap-4">
+                      {/* Hidden File Input */}
+                      <input
+                        type="file"
+                        id="image-upload"
+                        accept="image/*"
+                        onChange={handleFileChange}
+                        className="hidden"
+                      />
                       <button
                         onClick={() => {
-                          setShowImageInput(!showImageInput);
+                          document.getElementById("image-upload")?.click();
                           setShowPollInput(false);
+                          setShowImageInput(false); // Hide URL input if using file upload
                         }}
-                        className={`transition-colors flex items-center gap-2 ${showImageInput ? "text-primary" : "text-slate-400 hover:text-primary"}`}
+                        className={`transition-colors flex items-center gap-2 ${selectedFile || showImageInput ? "text-primary" : "text-slate-400 hover:text-primary"}`}
                       >
                         <span className="material-icons-round text-xl">
                           image
                         </span>
                         <span className="text-[10px] uppercase font-black tracking-widest hidden sm:inline">
-                          Foto
+                          {selectedFile ? "Foto Terpilih" : "Foto"}
                         </span>
                       </button>
                       <button
                         onClick={() => {
                           setShowPollInput(!showPollInput);
                           setShowImageInput(false);
+                          setSelectedFile(null);
+                          setImagePreview(null);
                         }}
                         className={`transition-colors flex items-center gap-2 ${showPollInput ? "text-primary" : "text-slate-400 hover:text-primary"}`}
                       >
@@ -244,18 +288,63 @@ const DiskusiPage = () => {
                           Poling
                         </span>
                       </button>
+
+                      <button
+                        onClick={() => {
+                          setShowImageInput(!showImageInput);
+                          setSelectedFile(null);
+                          setImagePreview(null);
+                          setShowPollInput(false);
+                        }}
+                        className="text-slate-400 hover:text-primary transition-all flex items-center gap-1"
+                        title="Gunakan URL Gambar"
+                      >
+                        <span className="material-icons-round text-lg">
+                          link
+                        </span>
+                      </button>
                     </div>
                     <button
                       onClick={handlePost}
-                      disabled={!newPost.trim()}
-                      className={`px-8 py-3 rounded-full font-black text-xs uppercase tracking-widest transition-all ${newPost.trim() ? "bg-primary text-white shadow-xl shadow-primary/30 active:scale-95" : "bg-slate-100 dark:bg-white/5 text-slate-400 opacity-50"}`}
+                      disabled={
+                        (!newPost.trim() && !selectedFile) || isUploading
+                      }
+                      className={`px-8 py-3 rounded-full font-black text-xs uppercase tracking-widest transition-all ${(newPost.trim() || selectedFile) && !isUploading ? "bg-primary text-white shadow-xl shadow-primary/30 active:scale-95" : "bg-slate-100 dark:bg-white/5 text-slate-400 opacity-50"}`}
                     >
-                      Kirim Post
+                      {isUploading ? (
+                        <div className="flex items-center gap-2">
+                          <div className="w-4 h-4 border-2 border-white/30 border-t-white rounded-full animate-spin"></div>
+                          <span>Mengirim...</span>
+                        </div>
+                      ) : (
+                        "Kirim Post"
+                      )}
                     </button>
                   </div>
 
-                  {/* Dynamic Inputs */}
-                  {showImageInput && (
+                  {/* Image Preview */}
+                  {imagePreview && (
+                    <div className="mt-6 relative w-full aspect-video rounded-3xl overflow-hidden border border-primary/20 group">
+                      <Image
+                        src={imagePreview}
+                        alt="Preview"
+                        fill
+                        className="object-cover"
+                      />
+                      <button
+                        onClick={() => {
+                          setSelectedFile(null);
+                          setImagePreview(null);
+                        }}
+                        className="absolute top-4 right-4 w-10 h-10 rounded-full bg-black/50 text-white flex items-center justify-center backdrop-blur-md opacity-0 group-hover:opacity-100 transition-opacity"
+                      >
+                        <span className="material-icons-round">close</span>
+                      </button>
+                    </div>
+                  )}
+
+                  {/* Dynamic Inputs (URL Input) */}
+                  {showImageInput && !selectedFile && (
                     <div className="mt-4 animate-in slide-in-from-top-2 duration-300">
                       <input
                         type="text"
